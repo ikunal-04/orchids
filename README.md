@@ -124,4 +124,5 @@ npx tsx agent/cli.ts "Can you store the 'Made for you' and 'Popular albums' in a
 ```
 ## Architecture
 This is the core architecture of the application, and how it is able to perform actions on in the directory:
-<img width="1369" height="463" alt="Screenshot 2025-07-18 at 3 40 42 PM" src="https://github.com/user-attachments/assets/8afb2e6c-35e7-4589-80c2-0020153bb849" />
+<img width="1375" height="457" alt="Screenshot 2025-07-18 at 3 54 22 PM" src="https://github.com/user-attachments/assets/c0bf5612-e124-4101-971a-8a6221fd300b" />
+
