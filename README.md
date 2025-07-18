@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🤖 Orchids Assignment
 
-## Getting Started
+A sophisticated Smart Agent that automates database-related feature development and integration within Next.js + TypeScript applications. Inspired by Orchids.app's vision, this CLI tool processes natural language queries and intelligently modifies project files to set up database schemas, operations, and integrate new functionalities directly into the frontend.
 
-First, run the development server:
+The agent understands the context of a Next.js Spotify clone frontend and seamlessly adds relevant backend and database features.
+
+## 🚀 Features
+
+- **Natural Language Processing**: Convert plain English requests into database operations
+- **Intelligent File Modification**: Automatically update schemas, migrations, and frontend code
+- **Real-time Development**: Instant feedback and file generation
+- **TypeScript Support**: Full type safety throughout the development process
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| **Frontend** | Next.js 14 (React 18) |
+| **Language** | TypeScript |
+| **Runtime** | Node.js 20.x+ |
+| **Package Manager** | Bun (recommended) |
+| **Database ORM** | Drizzle ORM |
+| **Database** | Neon (PostgreSQL-compatible) |
+| **AI Model** | Google Gemini 2.5 Pro |
+| **CLI Framework** | Commander.js |
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Node.js**: Version 20.x or higher
+  ```bash
+  nvm install 20
+  nvm use 20
+  ```
+- **Git**: For cloning the repository
+- **Bun**: Recommended package manager (install via [bun.sh](https://bun.sh))
+
+## 🚀 Quick Start
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+git clone https://github.com/ikunal-04/orchids.git
+cd orchids
+```
+
+### 2. Install Dependencies
+
+```bash
+bun install
+```
+
+### 3. Environment Configuration
+
+Create a `.env` file in the project root:
+
+```env
+# Google Gemini API Key
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Neon Database Connection String
+DATABASE_URL=your_neon_database_url_here
+```
+
+#### Obtaining API Keys
+
+- **GEMINI_API_KEY**: Get your API key from [Google AI Studio](https://aistudio.google.com/)
+- **DATABASE_URL**: Obtain your PostgreSQL connection string from your [Neon dashboard](https://console.neon.tech/)
+
+
+> **Note**: Ensure your `drizzle.config.ts` is properly configured to point to your schema files and database connection.
+
+### 4. Start the Application
+
+```bash
+# Start the Next.js development server
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Using the Database Agent
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The Database Agent is a CLI tool that processes natural language queries to automate database operations.
 
-## Learn More
+### Example Queries
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Store recently played songs
+npx tsx src/agent/cli.ts run "Can you store the Made for you and Popular albums in a table"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Store 'Made for you' and 'Popular albums'
+npx tsx agent/cli.ts "Can you store the 'Made for you' and 'Popular albums' in a table"
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### What Happens
 
-## Deploy on Vercel
+1. The CLI displays its thought process
+2. Files are automatically modified based on your query
+3. Database schemas and operations are generated
+4. Frontend integration code is updated
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> **Important**: After running the agent, restart your Next.js development server (`bun dev`) to see changes reflected in the frontend or just refresh the page.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 Project Structure
+
+```
+├── agent/                 # Database Agent CLI implementation
+│   ├── cli.ts            # Main CLI entry point
+│   └── index.ts          # Agent logic
+├── src/
+│   ├── app/              # Next.js app directory
+│   ├── components/       # React components
+│   ├── db/              # Database configuration
+│   │   ├── index.ts     # Database connection
+│   │   └── schema.ts    # Drizzle schema definitions
+│   ├── hooks/           # Custom React hooks
+│   └── lib/             # Utility functions
+├── drizzle/             # Drizzle migration files
+├── public/              # Static assets
+├── drizzle.config.ts    # Drizzle configuration
+└── package.json         # Project dependencies
+```

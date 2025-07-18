@@ -5,15 +5,7 @@ import SpotifySidebar from '@/components/spotify-sidebar'
 import SpotifyMainContent from '@/components/spotify-main-content'
 import SpotifyPlayer from '@/components/spotify-player'
 import SpotifyHeader from '@/components/spotify-header'
-
-interface Track {
-  id: string
-  title: string
-  artist: string
-  album: string
-  albumArt: string
-  duration: number
-}
+import { type Song } from '@/db/schema'
 
 export default function SpotifyApp() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true)
@@ -27,12 +19,24 @@ export default function SpotifyApp() {
   const [isLiked, setIsLiked] = useState(false)
   const [navigationHistory, setNavigationHistory] = useState<string[]>(['home'])
   const [historyIndex, setHistoryIndex] = useState(0)
-  const [currentTrack, setCurrentTrack] = useState<Track | null>(null)
+  const [currentTrack, setCurrentTrack] = useState<Song | null>(null)
+  const [sidebarKey, setSidebarKey] = useState(0); // Add key to force re-render sidebar
 
-  const handlePlayTrack = (track: Track) => {
+  const handlePlayTrack = async (track: Song) => {
     setCurrentTrack(track)
     setIsPlaying(true)
     setCurrentTime(0)
+    try {
+      await fetch('/api/songs/play', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: track.id }),
+      });
+      // Increment key to force sidebar to refetch recently played
+      setSidebarKey(prevKey => prevKey + 1);
+    } catch (error) {
+      console.error('Failed to log recently played song:', error);
+    }
   }
 
   const handleHomeClick = () => {
@@ -126,7 +130,6 @@ export default function SpotifyApp() {
   }
 
   const handleUserMenuAction = (action: 'profile' | 'settings' | 'logout') => {
-    // Handle user menu actions
     console.log('User menu action:', action)
   }
 
@@ -135,6 +138,7 @@ export default function SpotifyApp() {
       <div className="flex h-screen">
         {/* Sidebar */}
         <SpotifySidebar
+          key={sidebarKey}
           isVisible={isSidebarVisible}
           onToggle={() => setIsSidebarVisible(!isSidebarVisible)}
           onHomeClick={handleHomeClick}
